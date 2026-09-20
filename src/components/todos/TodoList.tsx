@@ -1,4 +1,16 @@
-function TodoList({ todos, onToggle, onDelete }) {
+interface Todo {
+  id: number
+  text: string
+  completed: boolean
+}
+
+interface TodoListProps {
+  todos: Todo[]
+  onToggle: (id: number) => void
+  onDelete: (id: number) => void
+}
+
+function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
   if (todos.length === 0) {
     return <p className="empty-state">No todos yet. Add one above!</p>
   }

@@ -1,4 +1,11 @@
-function FilterBar({ filter, onFilterChange, onClearCompleted, completedCount }) {
+interface FilterBarProps {
+  filter: string
+  onFilterChange: (filter: string) => void
+  onClearCompleted: () => void
+  completedCount: number
+}
+
+function FilterBar({ filter, onFilterChange, onClearCompleted, completedCount }: FilterBarProps) {
   return (
     <div className="filter-bar">
       <div className="filter-buttons">

@@ -1,11 +1,34 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
+interface Address {
+  street: string
+  suite: string
+  city: string
+  zipcode: string
+}
+
+interface Company {
+  name: string
+  catchPhrase: string
+  bs: string
+}
+
+interface User {
+  id: number
+  name: string
+  email: string
+  phone: string
+  website: string
+  address: Address
+  company: Company
+}
+
 function UserDetail() {
-  const { id } = useParams()
-  const [user, setUser] = useState(null)
+  const { id } = useParams<{ id: string }>()
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -21,7 +44,7 @@ function UserDetail() {
           throw new Error('Failed to fetch user')
         }
 
-        const data = await response.json()
+        const data: User = await response.json()
 
         if (!cancelled) {
           setUser(data)
@@ -29,7 +52,7 @@ function UserDetail() {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err.message)
+          setError(err instanceof Error ? err.message : 'An error occurred')
           setLoading(false)
         }
       }

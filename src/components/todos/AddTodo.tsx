@@ -1,9 +1,13 @@
 import { useState } from 'react'
 
-function AddTodo({ onAdd }) {
+interface AddTodoProps {
+  onAdd: (text: string) => void
+}
+
+function AddTodo({ onAdd }: AddTodoProps) {
   const [text, setText] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (text.trim()) {
       onAdd(text.trim())

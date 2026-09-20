@@ -3,15 +3,21 @@ import AddTodo from './AddTodo'
 import TodoList from './TodoList'
 import FilterBar from './FilterBar'
 
+interface Todo {
+  id: number
+  text: string
+  completed: boolean
+}
+
 function TodoApp() {
-  const [todos, setTodos] = useState([
+  const [todos, setTodos] = useState<Todo[]>([
     { id: 1, text: 'Learn React', completed: false },
     { id: 2, text: 'Build Todo App', completed: false },
     { id: 3, text: 'Master state management', completed: true }
   ])
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState<string>('all')
 
-  const addTodo = (text) => {
+  const addTodo = (text: string) => {
     setTodos([...todos, {
       id: Date.now(),
       text,
@@ -19,13 +25,13 @@ function TodoApp() {
     }])
   }
 
-  const toggleTodo = (id) => {
+  const toggleTodo = (id: number) => {
     setTodos(todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ))
   }
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id: number) => {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 

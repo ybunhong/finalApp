@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+interface User {
+  id: number
+  name: string
+  email: string
+  company: {
+    name: string
+  }
+}
+
 function UserDirectory() {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -20,7 +29,7 @@ function UserDirectory() {
           throw new Error('Failed to fetch users')
         }
 
-        const data = await response.json()
+        const data: User[] = await response.json()
 
         if (!cancelled) {
           setUsers(data)
@@ -28,7 +37,7 @@ function UserDirectory() {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err.message)
+          setError(err instanceof Error ? err.message : 'An error occurred')
           setLoading(false)
         }
       }
